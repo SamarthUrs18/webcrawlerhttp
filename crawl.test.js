@@ -1,4 +1,4 @@
-const {normalizeURL} = require('./crawl.js')
+const {normalizeURL, getURLsFromHTML} = require('./crawl.js')
 const {test, expect} = require('@jest/globals')
 
 test('normalizeURL with slash',()=>{
@@ -14,3 +14,17 @@ test('normalizeURL',()=>{
     const expected='google.com/javascript'
     expect(actual).toEqual(expected) 
  })
+
+ test('getURLsFromHTML',()=>{
+   const inputHTMLBody=`
+   <html>
+      <body> 
+         <a href="https://google.com/javascript">JavaScript</a>
+      </body>
+   </html>
+   `
+   const inputBaseURL='https://google.com'
+   const actual=getURLsFromHTML(inputHTMLBody, inputBaseURL)
+   const expected=['https://google.com/javascript']
+   expect(actual).toEqual(expected) 
+}) 
